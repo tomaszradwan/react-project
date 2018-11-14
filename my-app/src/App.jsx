@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Countdown from './Countdown';
+import "./App.css";
+import "./Countdown.css";
 
 class App extends Component {
   constructor() {
@@ -17,7 +19,7 @@ class App extends Component {
     const events = this.state.events.map(elem => {
       return <Countdown key={elem.id}  name={elem.name} time={elem.time} />;
     });
-    return <div>{events}</div>;
+    return <div className="app">{events}</div>;
   }
 }
 
