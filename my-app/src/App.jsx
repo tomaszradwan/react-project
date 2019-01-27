@@ -10,15 +10,15 @@ class App extends Component {
     super();
     this.state = {
       events: [
-        { id: 0, name: 'breakfast', hour: '07', minute: '00' },
-        { id: 1, name: 'dinner', hour: '15', minute: '00' },
-        { id: 2, name: 'supper', hour: '19', minute: '00' },
+        { id: 0, name: 'breakfast', hour: 7, minute: 0 },
+        { id: 1, name: 'dinner', hour: 15, minute: 0 },
+        { id: 2, name: 'supper', hour: 19, minute: 0 },
       ],
       editedEvent: {
         id: uniqid(),
         name: '',
-        hour: '',
-        minute: ''
+        hour: -1,
+        minute: -1
       },
     }
 
@@ -26,6 +26,7 @@ class App extends Component {
     this.handleSaveEvent = this.handleSaveEvent.bind(this);
     this.handleRemoveEvent = this.handleRemoveEvent.bind(this);
     this.handleEditInit = this.handleEditInit.bind(this);
+    this.handleEditCancel = this.handleEditCancel.bind(this);
   }
 
   handleEditEvent(val) {
@@ -61,8 +62,8 @@ class App extends Component {
 
       return {
         events: updatedEvents,
-        editedEvent: { id: uniqid(), name: "", hour: "", minute: "" }
-      };
+        editedEvent: { id: uniqid(), name: "", hour: -1, minute: -1 }
+      }
     });
     // this.setState(prevState => ({
     //   events: [...prevState.events, prevState.editedEvent],
@@ -78,15 +79,20 @@ class App extends Component {
   handleRemoveEvent(id) {
     this.setState(prevState => ({
       events: prevState.events.filter(elem => elem.id !== id)
-    }))
+    }));
   }
 
   handleEditInit(id) {
     this.setState(prevState => ({
       editedEvent: { ...prevState.events[id] }
-    }))
+    }));
   }
 
+  handleEditCancel() {
+    this.setState({
+      editedEvent: { id: uniqid(), name: "", hour: -1, minute: -1 }
+    });
+  }
 
   render() {
     const events = this.state.events.map(elem => {
@@ -112,6 +118,7 @@ class App extends Component {
           minute={this.state.editedEvent.minute}
           onInputChange={val => this.handleEditEvent(val)}
           onSave={() => this.handleSaveEvent()}
+          onCancel={() => this.handleEditCancel()}
         />
       </div>
     );
@@ -120,4 +127,4 @@ class App extends Component {
 
 export default App;
 
-//  9.1
+//  10.1
