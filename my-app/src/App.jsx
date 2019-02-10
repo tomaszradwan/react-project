@@ -9,6 +9,11 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      now: {
+        hour: new Date().getHours(),
+        minute: new Date().getMinutes(),
+        seconds: new Date().getSeconds()
+      },
       events: [
         { id: 0, name: 'breakfast', hour: 7, minute: 0 },
         { id: 1, name: 'dinner', hour: 15, minute: 0 },
@@ -22,11 +27,31 @@ class App extends Component {
       },
     }
 
+    this.timer = this.timer.bind(this);
     this.handleEditEvent = this.handleEditEvent.bind(this);
     this.handleSaveEvent = this.handleSaveEvent.bind(this);
     this.handleRemoveEvent = this.handleRemoveEvent.bind(this);
     this.handleEditInit = this.handleEditInit.bind(this);
     this.handleEditCancel = this.handleEditCancel.bind(this);
+  }
+
+  timer() {
+    this.setState({
+      now: {
+        hour: new Date().getHours(),
+        minute: new Date().getMinutes(),
+        seconds: new Date().getSeconds()
+      },
+    });
+  }
+
+  componentDidMount() {
+    const intervalId = setInterval(this.timer, 1000);
+    this.setState({ intervalId: intervalId });
+  }
+
+  componentDidUnmount() {
+    clearInterval(this.state.intervalId);
   }
 
   handleEditEvent(val) {
@@ -65,15 +90,6 @@ class App extends Component {
         editedEvent: { id: uniqid(), name: "", hour: -1, minute: -1 }
       }
     });
-    // this.setState(prevState => ({
-    //   events: [...prevState.events, prevState.editedEvent],
-    //   editedEvent: {
-    //     id: uniqid(),
-    //     name: '',
-    //     hour: '',
-    //     minute: ''
-    //   }
-    // }))
   }
 
   handleRemoveEvent(id) {
@@ -103,6 +119,7 @@ class App extends Component {
           name={elem.name}
           hour={elem.hour}
           minute={elem.minute}
+          timeNow={this.state.now}
           onRemove={id => this.handleRemoveEvent(id)}
           onEditInit={id => this.handleEditInit(id)}
         />
@@ -127,4 +144,4 @@ class App extends Component {
 
 export default App;
 
-//  10.1
+//  10.10
