@@ -49,7 +49,7 @@ class App extends Component {
     this.setState({ intervalId: intervalId });
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     clearInterval(this.state.intervalId);
   }
 
