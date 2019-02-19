@@ -1,6 +1,6 @@
 .countdown {
-  background: linear-gradient(#3682f4, #3181f2);
-  color: #ffffff;
+  background: linear-gradient(#368af4, #3181f2);
+  color: #fff;
   font-size: 1.8rem;
   padding: 25px;
 }
@@ -13,5 +13,9 @@
 }
 
 .countdown:hover .countdown__icons {
+  display: block;
+}
+
+.countdown:hover .overlay span {
   display: block;
 }

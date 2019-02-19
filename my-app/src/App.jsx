@@ -14,11 +14,7 @@ class App extends Component {
         minute: new Date().getMinutes(),
         seconds: new Date().getSeconds()
       },
-      events: [
-        { id: 0, name: 'breakfast', hour: 7, minute: 0 },
-        { id: 1, name: 'dinner', hour: 15, minute: 0 },
-        { id: 2, name: 'supper', hour: 19, minute: 0 },
-      ],
+      events: [],
       editedEvent: {
         id: uniqid(),
         name: '',
@@ -46,6 +42,9 @@ class App extends Component {
   }
 
   componentDidMount() {
+    const storageEvents = JSON.parse(localStorage.getItem("events")) || [];
+    this.setState({ events: storageEvents});
+
     const intervalId = setInterval(this.timer, 1000);
     this.setState({ intervalId: intervalId });
   }
