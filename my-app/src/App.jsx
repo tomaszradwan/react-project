@@ -89,13 +89,17 @@ class App extends Component {
         events: updatedEvents,
         editedEvent: { id: uniqid(), name: "", hour: -1, minute: -1 }
       }
-    });
+    },
+      () => localStorage.setItem("events", JSON.stringify(this.state.events))
+    );
   }
 
   handleRemoveEvent(id) {
     this.setState(prevState => ({
       events: prevState.events.filter(elem => elem.id !== id)
-    }));
+    }),
+      () => localStorage.setItem("events", JSON.stringify(this.state.events))
+    );
   }
 
   handleEditInit(id) {
